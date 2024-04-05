@@ -13,16 +13,23 @@ set(ENABLE_AVX2 True)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
+set(TBB_STRICT OFF)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-unused-command-line-argument")
+set(TBB_DISABLE_HWLOC_AUTOMATIC_SEARCH ON)
+set(EMSCRIPTEN_WITHOUT_PTHREAD true)
+# set(BUILD_SHARED_LIBS ON)
+
 # set the project name
 project(mesh_booleans)
 
 set(TBB_TEST OFF CACHE BOOL " " FORCE)
 set(TBB_EXAMPLES OFF CACHE BOOL " " FORCE)
+set(BUILD_SHARED_LIBS OFF)
 add_subdirectory(arrangements/external/oneTBB)
 
 
 # add the executable
-add_executable(${PROJECT_NAME} main.cpp)
+add_library(${PROJECT_NAME} main.cpp)
 
 target_include_directories(${PROJECT_NAME} PUBLIC
     ./
@@ -32,7 +39,7 @@ target_include_directories(${PROJECT_NAME} PUBLIC
 )
 
 set(cinolib_DIR ${PROJECT_SOURCE_DIR}/arrangements/external/Cinolib)
-set(CINOLIB_USES_OPENGL_GLFW_IMGUI ON)
+set(CINOLIB_USES_OPENGL_GLFW_IMGUI OFF)
 set(CINOLIB_USES_SHEWCHUK_PREDICATES ON)
 
 find_package(cinolib REQUIRED)
@@ -43,67 +50,6 @@ target_compile_definitions(${PROJECT_NAME} PUBLIC TBB_PARALLEL=1)
 target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/arrangements/external/abseil-cpp/)
 target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/arrangements/external/oneTBB/)
 
-
-# add_executable(${PROJECT_NAME}_rotation main-rotation.cpp)
-
-# target_include_directories(${PROJECT_NAME}_rotation PUBLIC
-#     ./
-#     code/
-#     arrangements/code/
-#     arrangements/external/Indirect_Predicates/include/
-# )
-
-# target_link_libraries(${PROJECT_NAME}_rotation cinolib)
-# target_link_libraries(${PROJECT_NAME}_rotation tbb)
-# target_compile_definitions(${PROJECT_NAME}_rotation PUBLIC TBB_PARALLEL=1)
-# target_include_directories(${PROJECT_NAME}_rotation PUBLIC ${PROJECT_SOURCE_DIR}/arrangements/external/abseil-cpp/)
-# target_include_directories(${PROJECT_NAME}_rotation PUBLIC ${PROJECT_SOURCE_DIR}/arrangements/external/oneTBB/)
-
-# add_executable(${PROJECT_NAME}_arap main-arap.cpp)
-
-# target_include_directories(${PROJECT_NAME}_arap PUBLIC
-#     ./
-#     code/
-#     arrangements/code/
-#     arrangements/external/Indirect_Predicates/include/
-# )
-
-# target_link_libraries(${PROJECT_NAME}_arap cinolib)
-# target_link_libraries(${PROJECT_NAME}_arap tbb)
-# target_compile_definitions(${PROJECT_NAME}_arap PUBLIC TBB_PARALLEL=1)
-# target_include_directories(${PROJECT_NAME}_arap PUBLIC ${PROJECT_SOURCE_DIR}/arrangements/external/abseil-cpp/)
-# target_include_directories(${PROJECT_NAME}_arap PUBLIC ${PROJECT_SOURCE_DIR}/arrangements/external/oneTBB/)
-
-# add_executable(${PROJECT_NAME}_stencil main-stencil.cpp)
-
-# target_include_directories(${PROJECT_NAME}_stencil PUBLIC
-#     ./
-#     code/
-#     arrangements/code/
-#     arrangements/external/Indirect_Predicates/include/
-# )
-
-# target_link_libraries(${PROJECT_NAME}_stencil cinolib)
-# target_link_libraries(${PROJECT_NAME}_stencil tbb)
-# target_compile_definitions(${PROJECT_NAME}_stencil PUBLIC TBB_PARALLEL=1)
-# target_include_directories(${PROJECT_NAME}_stencil PUBLIC ${PROJECT_SOURCE_DIR}/arrangements/external/abseil-cpp/)
-# target_include_directories(${PROJECT_NAME}_stencil PUBLIC ${PROJECT_SOURCE_DIR}/arrangements/external/oneTBB/)
-
-
-# add_executable(${PROJECT_NAME}_inputcheck main-inputcheck.cpp)
-
-# target_include_directories(${PROJECT_NAME}_inputcheck PUBLIC
-#         ./
-#         code/
-#         arrangements/code/
-#         arrangements/external/Indirect_Predicates/include/
-# )
-
-# target_link_libraries(${PROJECT_NAME}_inputcheck cinolib)
-# target_link_libraries(${PROJECT_NAME}_inputcheck tbb)
-# target_compile_definitions(${PROJECT_NAME}_inputcheck PUBLIC TBB_PARALLEL=1)
-# target_include_directories(${PROJECT_NAME}_inputcheck PUBLIC ${PROJECT_SOURCE_DIR}/arrangements/external/abseil-cpp/)
-# target_include_directories(${PROJECT_NAME}_inputcheck PUBLIC ${PROJECT_SOURCE_DIR}/arrangements/external/oneTBB/)
 
 # Compiler-specific options
 if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")

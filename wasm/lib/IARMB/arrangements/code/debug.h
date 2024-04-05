@@ -46,7 +46,7 @@
 #include "indirect_predicates.h"
 #include <cinolib/meshes/trimesh.h>
 
-std::string to_string_prec( double d )
+inline std::string to_string_prec( double d )
 {
     std::ostringstream stm ;
     stm << std::setprecision(std::numeric_limits<double>::digits10) << d ;

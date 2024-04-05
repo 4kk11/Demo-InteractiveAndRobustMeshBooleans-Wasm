@@ -29,6 +29,8 @@ fi
 # コンテナからホストにファイルをコピー
 docker cp $CONTAINER_NAME:/workspace/build/$TARGET_NAME.js ./build/$TARGET_NAME.js
 docker cp $CONTAINER_NAME:/workspace/build/$TARGET_NAME.wasm ./build/$TARGET_NAME.wasm
+# $TARGET_NAME.dataが存在する場合のみコピー
+docker cp $CONTAINER_NAME:/workspace/build/$TARGET_NAME.data ./build/$TARGET_NAME.data 2> /dev/null || true
 
 # コンテナの停止と削除
 docker stop $CONTAINER_NAME

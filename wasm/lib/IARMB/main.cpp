@@ -44,7 +44,7 @@
 
 std::vector<std::string> files;
 
-int main(int argc, char **argv)
+int booleam_mesh(int argc, char **argv)
 {
     BoolOp op;
     std::string file_out;

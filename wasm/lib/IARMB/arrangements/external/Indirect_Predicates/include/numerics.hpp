@@ -54,7 +54,7 @@ inline void initFPU()
 #else
 	int cword;
 	cword = 4722;                 /* set FPU control word for double precision */
-	_FPU_SETCW(cword);
+	// _FPU_SETCW(cword);
 #endif
 #endif
 }

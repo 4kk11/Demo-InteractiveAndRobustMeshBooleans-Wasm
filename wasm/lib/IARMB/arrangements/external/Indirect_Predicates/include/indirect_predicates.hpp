@@ -33,7 +33,7 @@
 #pragma intrinsic(fabs)
 
 // Uncomment the following to activate overflow/underflow checks
-#define CHECK_FOR_XYZERFLOWS
+// #define CHECK_FOR_XYZERFLOWS
 
 inline int dotProductSign2D_filtered(double px, double py, double rx, double ry, double qx, double qy)
 {
