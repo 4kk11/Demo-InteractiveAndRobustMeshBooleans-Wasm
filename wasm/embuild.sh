@@ -1,6 +1,13 @@
 #!/bin/bash
 set -e
 
+
+# 現在のディレクトリを保存
+ORIGINAL_DIR=$(pwd)
+
+# スクリプトのあるディレクトリに移動
+cd "$(dirname "$0")"
+
 # イメージの名前を設定
 IMAGE_NAME="boolean_wasm"
 CONTAINER_NAME="boolean_wasm_container"
@@ -32,10 +39,15 @@ docker cp $CONTAINER_NAME:/workspace/build/$TARGET_NAME.wasm ./build/$TARGET_NAM
 # $TARGET_NAME.dataが存在する場合のみコピー
 docker cp $CONTAINER_NAME:/workspace/build/$TARGET_NAME.data ./build/$TARGET_NAME.data 2> /dev/null || true
 
+# wwwにファイルをコピー
+cp ./build/$TARGET_NAME.js ../www/public/wasm/$TARGET_NAME.js
+cp ./build/$TARGET_NAME.wasm ../www/public/wasm/$TARGET_NAME.wasm
+
 # コンテナの停止と削除
 docker stop $CONTAINER_NAME
 docker rm $CONTAINER_NAME
 
 echo "Build files copied to the host machine."
  
- 
+ # 元のディレクトリに戻る
+cd $ORIGINAL_DIR

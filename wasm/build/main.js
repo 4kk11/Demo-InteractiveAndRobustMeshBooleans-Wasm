@@ -1,6 +1,11 @@
 const fs = require('fs');
 const createModule = require('./boolean_op.js')
 
+// 検証用
+// node.jsで実行するので、CMakeLists.txtでENVIRONMENT=nodeを指定する
+// 実行する時は以下のコマンドを使う
+// node --no-experimental-fetch main.js
+
 createModule().then((module) => {
     const operation = "intersection";
     const file1 = "armadillo.obj";
@@ -20,4 +25,3 @@ createModule().then((module) => {
     console.log("File saved to", localFilePath);
 });
 
-// node --no-experimental-fetch main.js
