@@ -29,7 +29,7 @@ export const BooleanOperation: React.FC<BooleanOperationProps> = (props: Boolean
         geometryA.applyMatrix4(objAMesh.matrixWorld);
         geometryB.applyMatrix4(objBMesh.matrixWorld);
         
-        const result = BooleanOp(geometryA, geometryB, operation).toNonIndexed();
+        const result = BooleanOp(geometryB, geometryA, operation).toNonIndexed();
         
         setResultGeometry(result);
         setKey(prev => prev + 1);
@@ -38,7 +38,6 @@ export const BooleanOperation: React.FC<BooleanOperationProps> = (props: Boolean
             geometryA.dispose();
             geometryB.dispose();
             result.dispose();
-            console.log("dispose")
         };
 
     }, [objARef, objBRef, operation, reculc])

@@ -56,25 +56,25 @@ export const Viewer = () => {
                 <ContactShadows opacity={0.3} blur={3}/>
 
                 <Suspense fallback={null}>
-                    <PivotControls anchor={[0, 0, 0]} depthTest={false} scale={2.0} lineWidth={2.0} onDragEnd={()=> setTriggerRecalc(prev => !prev)}>
-                        <ObjModel ref={objARef} url = "/models/obj/bunny.obj"  scale={10.0} onLoad={() => setObjALoaded(true)} castShadow={false}>
+                    <PivotControls anchor={[0, 0, 0]} depthTest={false} scale={2.0} lineWidth={2.0} onDrag={()=> setTriggerRecalc(prev => !prev)}>
+                        <ObjModel ref={objARef} url = "/models/obj/bunny_4k.obj"  scale={10.0} onLoad={() => setObjALoaded(true)} castShadow={false}>
                             <Wireframe
                                 thickness={0.015}
                                 stroke={"#000000"}
                             />
                         </ObjModel>
                     </PivotControls>
-                    <ObjModel ref={objBRef} url = "/models/obj/armadillo.obj"  scale={10.0} onLoad={() => setObjBLoaded(true)} castShadow={false}>
+                    <ObjModel ref={objBRef} url = "/models/obj/armadillo_15k.obj"  scale={10.0} onLoad={() => setObjBLoaded(true)} castShadow={false}>
                         <Wireframe
                             thickness={0.015}
                             stroke={"#000000"}
                         />
                     </ObjModel>
                     {objALoaded && objBLoaded &&(
-                        <BooleanOperation objARef={objARef} objBRef={objBRef} operation="intersection" reculc={trriggerRecalc}>
+                        <BooleanOperation objARef={objARef} objBRef={objBRef} operation="difference" reculc={trriggerRecalc}>
                             <Wireframe
-                                thickness={0.015}
-                                stroke={"#FF0000"}
+                                thickness={0.02}
+                                stroke={"#000000"}
                             />
                         </BooleanOperation>
                     )}

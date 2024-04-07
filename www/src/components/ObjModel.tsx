@@ -1,9 +1,10 @@
 import { useLoader } from "@react-three/fiber"
 import { forwardRef, useEffect, useRef, useState } from "react"
 import { OBJLoader } from "three/examples/jsm/Addons.js"
-import { Mesh, BufferGeometry } from "three"
+import { Mesh, BufferGeometry, Color } from "three"
 
 const useObjLoader = (url: string, onLoad: () => void) => {
+    // NOTE: どうやらマージしてあるobj入れてもポリゴンスープにしているっぽい
     const obj = useLoader(OBJLoader, url);
     const [geometry, setGeometry] = useState<BufferGeometry | null>(null);
 
@@ -45,7 +46,7 @@ export const ObjModel = forwardRef<Mesh, ObjModelProps>((props: ObjModelProps, r
 
     return (
         <mesh ref={ref} geometry={geometry} {...meshProps} renderOrder={2}>
-            <meshStandardMaterial transparent={true} opacity={0.1}/>
+            <meshStandardMaterial transparent={true} opacity={0.4}/>
             {children}
         </mesh>
     )
