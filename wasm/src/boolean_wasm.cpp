@@ -18,6 +18,8 @@ extern "C"
         uint **out_tris,
         size_t *out_tris_len)
     {
+
+        std::cout << "operation: " << operation << std::endl;
         // Convert input to std::vector
         std::vector<double> in_coords_vec(in_coords, in_coords + in_coords_len);
         std::vector<uint> in_tris_vec(in_tris, in_tris + in_tris_len);
@@ -45,6 +47,7 @@ extern "C"
         std::vector<uint> bool_tris;
         std::vector<std::bitset<NBIT>> bool_labels;
 
+        std::cout << "start boolean" << std::endl;
         auto start_time = std::chrono::system_clock::now();
         // Call the boolean pipeline
         booleanPipeline(in_coords_vec, in_tris_vec, in_labels_vec, op, bool_coords, bool_tris, bool_labels);
@@ -105,12 +108,20 @@ extern "C"
         std::chrono::duration<double> elapsed_seconds = end_time - start_time;
         std::cout << "elapsed time: " << elapsed_seconds.count() << "s\n";
 
+        std::cout << "out_coords_len: " << bool_coords.size() << std::endl;
+        std::cout << "out_tris_len: " << bool_tris.size() << std::endl;
+
         cinolib::write_OBJ(file_out.c_str(), bool_coords, bool_tris, {});
 
         return 0;
     }
 
-    EXPORTED_FUNCTION void DeleteArray(double *arr)
+    EXPORTED_FUNCTION void DeleteArrayDouble(double *arr)
+    {
+        delete[] arr;
+    }
+
+    EXPORTED_FUNCTION void DeleteArrayUint(uint *arr)
     {
         delete[] arr;
     }
