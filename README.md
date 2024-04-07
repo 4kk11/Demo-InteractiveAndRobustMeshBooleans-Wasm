@@ -1,5 +1,6 @@
 # Demo-InteractiveAndRobustMeshBooleans-Wasm
 
+This GitHub repository demonstrates interactive Boolean operations in the browser by building [InteractiveAndRobustMeshBooleans](https://github.com/gcherchi/InteractiveAndRobustMeshBooleans) with WebAssembly (Wasm).
 
 ## Build
 ```bash
