@@ -18,20 +18,6 @@ const Env = () => {
     )
 }
 
-const Things = () => {
-    const {Test} = useControls({
-        Test: {
-            options: ["A", "B", "C"],
-            value: "A"
-        }
-    });
-
-    return (
-        <>
-
-        </>
-    )
-}
 
 export const Viewer = () => {
     const objARef = useRef<Mesh>(null);
@@ -41,10 +27,16 @@ export const Viewer = () => {
     const [objBLoaded, setObjBLoaded] = useState(false);
 
     const [trriggerRecalc, setTriggerRecalc] = useState(false);
+
+    const {operation} = useControls({
+        operation: {
+            options: ["union", "difference", "intersection"],
+            value: "difference"
+        }
+    });
     
     return (
         <>
-            <Things />
             <Leva />
             <Canvas camera={{position: [-10, 10, 10], fov: 45}}>
                 
@@ -57,23 +49,23 @@ export const Viewer = () => {
 
                 <Suspense fallback={null}>
                     <PivotControls anchor={[0, 0, 0]} depthTest={false} scale={2.0} lineWidth={2.0} onDrag={()=> setTriggerRecalc(prev => !prev)}>
-                        <ObjModel ref={objARef} url = "/models/obj/bunny_4k.obj"  scale={10.0} onLoad={() => setObjALoaded(true)} castShadow={false}>
+                        <ObjModel ref={objARef} url = "/models/obj/bunny_4k.obj"  scale={10.0} onLoad={() => setObjALoaded(true)} castShadow={true}>
                             <Wireframe
-                                thickness={0.015}
+                                thickness={0.03}
                                 stroke={"#000000"}
                             />
                         </ObjModel>
                     </PivotControls>
-                    <ObjModel ref={objBRef} url = "/models/obj/armadillo_15k.obj"  scale={10.0} onLoad={() => setObjBLoaded(true)} castShadow={false}>
+                    <ObjModel ref={objBRef} url = "/models/obj/armadillo_15k.obj"  scale={10.0} onLoad={() => setObjBLoaded(true)} castShadow={true}>
                         <Wireframe
-                            thickness={0.015}
+                            thickness={0.03}
                             stroke={"#000000"}
                         />
                     </ObjModel>
                     {objALoaded && objBLoaded &&(
-                        <BooleanOperation objARef={objARef} objBRef={objBRef} operation="difference" reculc={trriggerRecalc}>
+                        <BooleanOperation objARef={objARef} objBRef={objBRef} operation={operation as any} reculc={trriggerRecalc}>
                             <Wireframe
-                                thickness={0.02}
+                                thickness={0.03}
                                 stroke={"#000000"}
                             />
                         </BooleanOperation>
